@@ -1,219 +1,100 @@
-def iterPower(base, exp):
+def evalQuadratic(a, b, c, x):
     '''
-    base: int or float.
-    exp: int >= 0
- 
-    returns: int or float, base^exp
+    a, b, c: numerical values for the coefficients of a quadratic equation
+    x: numerical value at which to evaluate the quadratic.
     '''
-    result = base
-    i = exp
-    if exp == 0:
-        result = 1
+    return round (a * x ** 2 + b * x + c , 4)
+
+def twoQuadratics(a1, b1, c1, x1, a2, b2, c2, x2):
+    '''
+    a1, b1, c1: one set of coefficients of a quadratic equation
+    a2, b2, c2: another set of coefficients of a quadratic equation
+    x1, x2: values at which to evaluate the quadratics
+    '''
+    print evalQuadratic(a1, b1, c1, x1) + evalQuadratic(a2, b2, c2, x2)
+
+
+def primesList(N): 
+	my_list = []
+	for num in range(2, N+1): 
+		prime = True
+		for div in range(2, num): 
+			if num % div == 0:
+				prime = False
+				break
+		if prime:
+			my_list.append(num)
+	return my_list
+				
+#print primesList(100)
+
+
+def count7(N):
+    '''
+    N: a non-negative integer
+    '''
+    if N == 0:
+    	return 0
+    elif N % 10 == 7:
+    	return 1 + count7(N / 10)
     else:
-        while i > 1:
-            result = result * base
-            i -= 1
-    return result
-
-#print iterPower(-5.7, 2)
-
-def recurPower(base, exp):
-    '''
-    base: int or float.
-    exp: int >= 0
- 
-    returns: int or float, base^exp
-    '''
-    if exp == 0:
-        return 1
-    else:
-        return base * recurPower(base, exp-1)
-
-def recurPowerNew(base, exp):
-    '''
-    base: int or float.
-    exp: int >= 0
-
-    returns: int or float; base^exp
-    '''
-    if exp == 0:
-        return 1
-    elif exp % 2 == 0:
-        return recurPowerNew(base*base, exp/2)
-    else:
-        return base * recurPowerNew(base, exp-1)
-
-#print recurPowerNew(2, 4)
-
-def gcdIter(a, b):
-    '''
-    a, b: positive integers
-    
-    returns: a positive integer, the greatest common divisor of a & b.
-    '''
-    small = min(a, b) 
-    while a % small != 0 or b % small !=0 and small != 1:
-        small = small - 1
-    return small
-
-# A clever mathematical trick (due to Euclid) makes it easy to find greatest common divisors. Suppose that a and b are two positive integers:
-
-#     If b = 0, then the answer is a
-
-#     Otherwise, gcd(a, b) is the same as gcd(b, a % b)
-def gcdRecur(a, b):
-    '''
-    a, b: positive integers
-    
-    returns: a positive integer, the greatest common divisor of a & b.
-    '''
-    if b == 0:
-        return a
-    else:
-        return gcdRecur(b, a % b)
-
-#print gcdRecur(17, 12)      
-
-    # gcd(2, 12) = 2
-
-    # gcd(6, 12) = 6
-
-    # gcd(9, 12) = 3
-
-    # gcd(17, 12) = 1
+    	return count7(N / 10)
+    	
+#print count7(8989)
 
 
-def lenIter(aStr):
-    '''
-    aStr: a string
-    
-    returns: int, the length of aStr
-    '''
-    l = 0
-    for c in aStr:
-        l += 1
-    return l
-                
-
-#print lenIter("mokka")
-
-def lenRecur(aStr):
-    '''
-    aStr: a string
-    
-    returns: int, the length of aStr
-    '''
-    if aStr == "":
-        return 0
-    else:
-        return 1 + lenRecur(aStr[1:])
-
-#print lenRecur("mokka")
-
-def isIn(char, aStr):
+def uniqueValues(aDict):
 	'''
-	char: a single character
-	aStr: an alphabetized string
-
-	returns: True if char is in aStr; False otherwise
+	aDict: a dictionary
 	'''
-	high = len(aStr)
-	low = 0
-	ans = (high + low)/2
-	if len(aStr) == 0:
-		return False
-	elif len(aStr) == 1:
-		if char == aStr:
-			return True
-		else:
-			return False
-	elif aStr[ans] == char:
-		return True
-	else:
-		if char < aStr[ans]:
-			return isIn(char, aStr[:ans])
-		else:
-			return isIn(char, aStr[ans+1:])
-#print isIn("b", "abc")
-
-def semordnilapWrapper(str1, str2):
-    # A single-length string cannot be semordnilap
-    if len(str1) == 1 or len(str2) == 1:
-        return False
-
-    # Equal strings cannot be semordnilap
-    if str1 == str2:
-        return False
-
-    return semordnilap(str1, str2)
-
-def semordnilap(str1, str2):
-    '''
-    str1: a string
-    str2: a string
-    
-    returns: True if str1 and str2 are semordnilap;
-             False otherwise.
-    '''
-    if len(str1) != len(str2):
-    	return False
-    if str1 == str2:
-    	return True
-    else:
-    	if str1[0] == str2[-1]:
-    		return semordnilap(str1[1:], str2[:-1])
-    	else:
-    		return False
-
-
-#print semordnilapWrapper("tag", "gatg")
-    # nametag / gateman
-    # dog / god
-    # live / evil
-    # desserts / stressed
-
-
-def oddTuples(aTup):
-    '''
-    aTup: a tuple
-    
-    returns: tuple, every other element of aTup. 
-    '''
-    return aTup[0: len(aTup): 2]
-#print oddTuples(('I', 'am', 'a', 'test', 'tuple'))
+	my_dict = dict()
+	my_list = list()
+	for key, value in aDict.iteritems():
+ 		if value not in my_dict:
+ 			my_dict[value] = [key]
+ 		else:
+ 			my_dict[value].append(key)
+ 	for key, value in my_dict.iteritems():
+ 		if len(value) == 1:
+ 			my_list.append(value[0])
+ 	return sorted(my_list)
 
 
 
-def howMany(aDict):
-    '''
-    aDict: A dictionary, where all the values are lists.
+# print uniqueValues({1: 100, 2: 100, 3: 1})
 
-    returns: int, how many values are in the dictionary.
-    '''
-    total = 0
-    for values_list in aDict.values():
-        for animal in values_list:
-            total += 1
-    return total
+def f(s):
+    return 'a' in s
+      
+def satisfiesF(L):
+	"""
+	Assumes L is a list of strings
+	Assume function f is already defined for you and it maps a string to a Boolean
+	Mutates L such that it contains all of the strings, s, originally in L such
+	that f(s) returns True, and no other elements. Remaining elements in L
+	should be in the same order.
+	Returns the length of L after mutation
+	"""
+	count = len(L)
+	rec_list = list()
+	for i in range(0,count):
+		if(f(L[i]) == False):
+			rec_list.append(L[i])    
+	if(rec_list):
+		for j in rec_list:
+			L.remove(j)
+	return len(L)
 
-def biggest(aDict):
-    '''
-    aDict: A dictionary, where all the values are lists.
+# L = ['a', 'b', 'a']
+# print satisfiesF(L)
+# print L
 
-    returns: The key with the largest number of values associated with it
-    '''
-    if len(aDict) == 0:
-        return None
-    else:
-        biggest_key = aDict.keys()[0]
-        biggest_total = 0
-        for key in aDict:
-            total = 0
-            for value in aDict[key]:
-                total += 1
-            if total > biggest_total:
-                biggest_key = key
-                biggest_total = total
-        return biggest_key
-        
-    
+# 2
+# ['a', 'a']
+
+# my_list = list()
+# for item in L:
+# 	if f(item):
+# 		my_list.append(item)
+# L[:] = my_list
+# return len(L)

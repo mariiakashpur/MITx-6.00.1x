@@ -1,89 +1,65 @@
-def getSublists(L, n):
-	finalList = []
-	for i in range(len(L)-n+1):
-		finalList.append(L[i:i+n])
-	return finalList
+high = 100
+low = 0
+ind = ""
+print "Please think of a number between 0 and 100!"
+while ind != "c":
+	ans = (high + low)/2
+	print "Is your secret number " + str(ans) + "?"
+	ind = raw_input("Enter 'h' to indicate the guess is too high. Enter 'l' to indicate the guess is too low. Enter 'c' to indicate I guessed correctly.")
+	if ind not in "hlc":
+		print "Sorry, I did not understand your input."
+	else:
+		if ind == "h":
+		    high = ans
+		else:
+		    low = ans
+print "Game over. Your secret number was: " + str(ans)
 
-# Example 1, if L = [10, 4, 6, 8, 3, 4, 5, 7, 7, 2] and n = 4 then your function should return the list 
-# [[10, 4, 6, 8], [4, 6, 8, 3], [6, 8, 3, 4], [8, 3, 4, 5], [3, 4, 5, 7], [4, 5, 7, 7], [5, 7, 7, 2]]
+#  Write a Python function, clip(lo, x, hi) that returns lo if x is less than lo; hi if x is greater than hi; and x otherwise. 
+#  For this problem, you can assume that lo < hi.
 
-# Example 2, if L = [1, 1, 1, 1, 4] and n = 2 then your function should return the list 
-# [[1, 1], [1, 1], [1, 1], [1, 4]]
+# Don't use any conditional statements for this problem. Instead, use the built in Python functions min and max. 
 
-#print getSublists([1, 1, 1, 1, 4], 2)
+def clip(lo, x, hi): 
+    '''
+    Takes in three numbers and returns a value based on the value of x.
+    Returns:
+     - lo, when x < lo
+     - hi, when x > hi
+     - x, otherwise
+    '''
+    return min(max(lo, x), hi)
 
-def longestRun(L):
-	for i in range(len(L), 0, -1):
-		sublists = getSublists(L, i)
-		for sublist in sublists:
-			if sorted(sublist) == sublist:
-				return len(sublist)
+#print clip(3, 2, 4)
+    # 1 2 3 -> 2     3 2 4 -> 3    
 
 
+def odd(x):
+    '''
+    x: int or float.
 
-# For example, if L = [10, 4, 6, 8, 3, 4, 5, 7, 7, 2] then your function should return the value 5 
-# because the longest run of monotonically increasing integers in L is [3, 4, 5, 7, 7].
-# >>> range(5, 0, -1)
-# [5, 4, 3, 2, 1]
+    returns: True if x is odd, False otherwise
+    '''
+    return bool(x%2)
+#print odd(4)
 
-print longestRun([10, 4, 6, 8, 3, 4, 5, 7, 7, 2])
+def isVowel(char):
+    '''
+    char: a single letter of any case
 
-## DO NOT MODIFY THE IMPLEMENTATION OF THE Person CLASS ##
-class Person(object):
-    def __init__(self, name):
-        #create a person with name name
-        self.name = name
-        try:
-            firstBlank = name.rindex(' ')
-            self.lastName = name[firstBlank+1:]
-        except:
-            self.lastName = name
-        self.age = None
-    def getLastName(self):
-        #return self's last name
-        return self.lastName
-    def setAge(self, age):
-        #assumes age is an int greater than 0
-        #sets self's age to age (in years)
-        self.age = age
-    def getAge(self):
-        #assumes that self's age has been set
-        #returns self's current age in years
-        if self.age == None:
-            raise ValueError
-        return self.age
-    def __lt__(self, other):
-        #return True if self's name is lexicographically less
-        #than other's name, and False otherwise
-        if self.lastName == other.lastName:
-            return self.name < other.name
-        return self.lastName < other.lastName
-    def __str__(self):
-        #return self's name
-        return self.name
-        
-class USResident(Person):
-    """ 
-    A Person who resides in the US.
-    """
-    def __init__(self, name, status):
-        """ 
-        Initializes a Person object. A USResident object inherits 
-        from Person and has one additional attribute:
-        status: a string, one of "citizen", "legal_resident", "illegal_resident"
-        Raises a ValueError if status is not one of those 3 strings
-        """
-        Person.__init__(self, name)
-        if status not in ["citizen", "legal_resident", "illegal_resident"]:
-            raise ValueError("") 
-        self.status = status
-        
-    def getStatus(self):
-        """
-        Returns the status
-        """
-        return self.status
+    returns: True if char is a vowel and False otherwise.  True if char is a vowel ('a', 'e', 'i', 'o', or 'u'), and False otherwise.
+    '''
+    char = char.lower()
+    return char == "a" or char == "e" or char == "i" or char == "o" or char == "u"
 
-a = USResident('Tim Beaver', 'citizen')
-print a.getStatus()
-b = USResident('Tim Horton', 'non-resident')
+#print isVowel('A')
+
+def isVowel2(char):
+    '''
+    char: a single letter of any case
+
+    returns: True if char is a vowel and False otherwise.
+    '''
+    return char.lower() in "aeiou"
+
+#print isVowel2('f')
